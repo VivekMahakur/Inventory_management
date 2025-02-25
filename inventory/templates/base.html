@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Godam - Inventory Management System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Ensure the body takes the full height of the screen */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        /* Flexbox container to make sure the footer is always at the bottom */
+        .content {
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Footer at the bottom of the page */
+        footer {
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="content">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand mx-auto" href="{% url 'homepage' %}">
+                <span style="font-size: 1.5em; color: white;">Godam</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    {% block content %}
+    {% endblock %}
+
+    <!-- Footer (Always at the bottom) -->
+    <footer class="bg-dark text-white text-center py-4">
+        <p>&copy; 2025 Godam - All Rights Reserved</p>
+    </footer>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

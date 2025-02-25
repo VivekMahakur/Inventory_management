@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="my-4">Calculator</h2>
+    <div class="card">
+        <div class="card-header text-center">
+            <h4>Grocery Price Calculator</h4>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{% url 'calculator' %}">
+                {% csrf_token %}
+                <!-- Select Calculation Type -->
+                <div class="form-group">
+                    <label for="calculation_type">Choose Calculation Type:</label>
+                    <select name="calculation_type" id="calculation_type" class="form-control" onchange="toggleInputs()">
+                        <option value="find_quantity" {% if request.POST.calculation_type == 'find_quantity' %} selected {% endif %}>Calculate Quantity</option>
+                        <option value="find_price" {% if request.POST.calculation_type == 'find_price' %} selected {% endif %}>Calculate Price</option>
+                    </select>
+                </div>
+
+                <!-- Price per kg (Always visible) -->
+                <div class="form-group">
+                    <label for="price_per_kg">Price per kg (₹):</label>
+                    <input type="number" step="any" name="price_per_kg" class="form-control" value="{{ request.POST.price_per_kg }}" required>
+                </div>
+
+                <!-- Fields for Find Quantity (Visible only when selected) -->
+                <div id="find_quantity" class="calc-options" style="display: none;">
+                    <div class="form-group">
+                        <label for="total_price">Total Price (₹):</label>
+                        <input type="number" step="any" name="total_price" class="form-control" value="{{ request.POST.total_price }}" required>
+                    </div>
+                </div>
+
+                <!-- Fields for Find Price (Visible only when selected) -->
+                <div id="find_price" class="calc-options" style="display: none;">
+                    <div class="form-group">
+                        <label for="quantity_kg">Quantity (kg):</label>
+                        <input type="number" step="any" name="quantity_kg" class="form-control" value="{{ request.POST.quantity_kg }}" required>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Calculate</button>
+                </div>
+            </form>
+
+            <!-- Result or Error Display -->
+            {% if result %}
+                <div class="alert alert-success mt-4">
+                    <strong>Result:</strong> {{ result }}
+                </div>
+            {% elif error %}
+                <div class="alert alert-danger mt-4">
+                    <strong>Error:</strong> {{ error }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    // Function to toggle visibility of form fields based on selected option
+    function toggleInputs() {
+        const calculationType = document.getElementById('calculation_type').value;
+        
+        // Hide both options initially
+        document.getElementById('find_quantity').style.display = 'none';
+        document.getElementById('find_price').style.display = 'none';
+        
+        // Show only the selected option
+        if (calculationType === 'find_quantity') {
+            document.getElementById('find_quantity').style.display = 'block';
+        } else if (calculationType === 'find_price') {
+            document.getElementById('find_price').style.display = 'block';
+        }
+    }
+
+    // Initial call to toggle the fields based on the default option selected
+    window.onload = toggleInputs;
+</script>
+{% endblock %}

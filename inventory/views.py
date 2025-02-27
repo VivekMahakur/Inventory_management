@@ -63,3 +63,5 @@ def add_product(request):
 
 def delete_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
+    product.delete()  # Delete the product
+    return redirect('inventory')  # Redirect to inventory after deletion
